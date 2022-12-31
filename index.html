@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>First-Person Shooter</title>
+  </head>
+  <body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+      // Set up canvas and context
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Set up player variables
+let playerX = 50;
+let playerY = 50;
+let playerDirection = 0;
+let playerZoom = 1;
+
+// Set up enemy variables
+let enemyX = 200;
+let enemyY = 200;
+let enemyDirection = 0;
+
+// Set up keyboard control variables
+let keyW = false;
+let keyA = false;
+let keyS = false;
+let keyD = false;
+let keyRightMouse = false;
+
+// Set up game loop
+function gameLoop() {
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Update player position based on keyboard input
+  if (keyW) {
+    playerY -= 5;
+  }
+  if (keyA) {
+    playerX -= 5;
+  }
+  if (keyS) {
+    playerY += 5;
+  }
+  if (keyD) {
+    playerX += 5;
+  }
+
+  // Update player zoom based on right mouse button
+  playerZoom = keyRightMouse ? 2 : 1;
+
+  // Rotate player based on mouse position
+  playerDirection = Math.atan2(
+    canvas.height / 2 - event.clientY,
+    canvas.width / 2 - event.clientX
+  );
+
+  // Update enemy position
+  enemyDirection += (Math.random() - 0.5) * 0.1;
+  enemyX += Math.cos(enemyDirection) * 5;
+  enemyY += Math.sin(enemyDirection) * 5;
+
+  // Draw player
+  ctx.save();
+  ctx.translate(playerX, playerY);
+  ctx.rotate(playerDirection);
+  ctx.scale(playerZoom, playerZoom);
+  ctx.fillRect(-10, -10, 20, 20);
+  ctx.restore();
+
+  // Draw enemy
+  ctx.fillRect(enemyX, enemyY, 20, 20);
+
+  // Request next frame
+  requestAnimationFrame(gameLoop);
+}
+
+// Set up keyboard and mouse controls
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'w') {
+    keyW = true;
+  }
+  if (event.key === 'a') {
+    keyA = true;
+  }
+  if (event.key === 's') {
+    keyS = true;
+  }
+  if (event.key === 'd') {
+    keyD = true;
+  }
+});
+document.addEventListener('keyup', (event) => {
+  if (event.key === 'w') {
+    keyW = false;
+  }
+  if (event.key === 'a') {
+    keyA = false;
+  }
+  if (event.key === 's
+
+    </script>
+  </body>
+</html>
